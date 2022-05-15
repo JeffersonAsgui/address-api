@@ -1,7 +1,7 @@
 package dev.asgui.address.controller;
 
+import dev.asgui.address.dto.AddressDto;
 import dev.asgui.address.dto.RequestDto;
-import dev.asgui.address.model.Address;
 import dev.asgui.address.service.FindingAddressService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class FindingAddressController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> findByCep(@Valid @RequestBody RequestDto request) {
+    public ResponseEntity<AddressDto> findByCep(@Valid @RequestBody RequestDto request) {
         logger.info("m=address.findByCep cep={}", request.getCep());
         var address = service.findAddressByCep(request.getCep());
         return ResponseEntity.ok().body(address);

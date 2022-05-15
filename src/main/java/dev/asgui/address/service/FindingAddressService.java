@@ -1,12 +1,12 @@
 package dev.asgui.address.service;
 
-import dev.asgui.address.model.Address;
+import dev.asgui.address.dto.AddressDto;
 
 public interface FindingAddressService {
 
-    String updateDigitLeftToRight(String cep,int position);
+    String updateDigitLeftToRight(String cep, int position);
 
     boolean isNumbering(String cep);
 
-    Address findAddressByCep(String cep);
+    AddressDto findAddressByCep(String cep);
 }

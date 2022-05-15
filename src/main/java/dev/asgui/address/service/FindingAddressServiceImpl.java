@@ -1,8 +1,9 @@
 package dev.asgui.address.service;
 
 import dev.asgui.address.client.ConsultCepClient;
+import dev.asgui.address.dto.AddressDto;
 import dev.asgui.address.exception.DataIntegratyViolationException;
-import dev.asgui.address.model.Address;
+import dev.asgui.address.mapper.AddressMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,22 +35,25 @@ public class FindingAddressServiceImpl implements FindingAddressService {
     }
 
     @Override
-    public Address findAddressByCep(String cep) {
+    public AddressDto findAddressByCep(String cep) {
         if (!isNumbering(cep)) {
             logger.error("m=address.findByCep error cep={} ", cep);
             throw new DataIntegratyViolationException("CEP inválido");
         }
+        AddressDto address = getAddressDto(cep);
+        if (address == null) {
+            throw new DataIntegratyViolationException("CEP inválido");
+        }
+        return address;
+    }
+
+    private AddressDto getAddressDto(String cep) {
         var position = cep.length();
-        Address ad = null;
+        AddressDto address = null;
         do {
             var response = consultCepClient.getAddress(cep);
             if (Objects.requireNonNull(response.getBody()).getCep() != null) {
-                ad = new Address();
-                var obj = response.getBody();
-                ad.setCITY(obj.getLocalidade());
-                ad.setDISTRICT(obj.getBairro());
-                ad.setSTATE(obj.getUf());
-                ad.setSTREET(obj.getLogradouro());
+                address = AddressMapper.toDto(response.getBody());
                 position = 0;
             } else {
                 position--;
@@ -57,6 +61,7 @@ public class FindingAddressServiceImpl implements FindingAddressService {
                 logger.info("m=address.findByCep Update Digit Left To Right cep={} ", cep);
             }
         } while (position > 0);
-        return ad;
+        return address;
     }
+
 }
