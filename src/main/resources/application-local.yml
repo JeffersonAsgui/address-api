@@ -1,0 +1,4 @@
+server.port: 8080
+
+cep:
+  url: http://viacep.com.br

@@ -4,7 +4,7 @@ import dev.asgui.address.model.Address;
 
 public interface FindingAddressService {
 
-    String updateLastDigit(String cep);
+    String updateDigitLeftToRight(String cep,int position);
 
     boolean isNumbering(String cep);
 
