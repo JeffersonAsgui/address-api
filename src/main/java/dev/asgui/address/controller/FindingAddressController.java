@@ -1,5 +1,6 @@
 package dev.asgui.address.controller;
 
+import dev.asgui.address.dto.RequestDto;
 import dev.asgui.address.model.Address;
 import dev.asgui.address.service.FindingAddressService;
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/api/v1/address")
@@ -20,11 +23,11 @@ public class FindingAddressController {
         this.service = service;
     }
 
-    @GetMapping("/{cep}")
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> findById(@PathVariable("cep") String cep) {
-        logger.info("m=address.findByCep cep={}", cep);
-        var address = service.findAddressByCep(cep);
+    public ResponseEntity<Address> findByCep(@Valid @RequestBody RequestDto request) {
+        logger.info("m=address.findByCep cep={}", request.getCep());
+        var address = service.findAddressByCep(request.getCep());
         return ResponseEntity.ok().body(address);
     }
 

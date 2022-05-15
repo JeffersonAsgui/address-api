@@ -6,5 +6,7 @@ public interface FindingAddressService {
 
     String updateLastDigit(String cep);
 
+    boolean isNumbering(String cep);
+
     Address findAddressByCep(String cep);
 }
