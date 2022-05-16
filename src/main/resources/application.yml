@@ -2,3 +2,25 @@ server.port: 8080
 
 spring:
   profiles.active: local
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: 'health, metrics'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    metrics:
+      enabled: true
+
+info.application:
+  app: '@project.name@'
+  description: '@project.description@'
+  version: '@project.version@'
+  build-timestamp: '@project.build.timestamp@'
+
+logging.level:
+  dev.asgui.address: DEBUG
