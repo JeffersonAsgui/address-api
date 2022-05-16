@@ -3,6 +3,10 @@ package dev.asgui.address.controller;
 import dev.asgui.address.dto.AddressDto;
 import dev.asgui.address.dto.RequestDto;
 import dev.asgui.address.service.FindingAddressService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,9 @@ public class FindingAddressController {
         this.service = service;
     }
 
+    @Operation(summary = "Get Address by sending CEP", description = "Return Address to CEP valid")
+    @ApiResponse(responseCode = "200", description = "Ok",
+            content = @Content(schema = @Schema(implementation = AddressDto.class)))
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AddressDto> findByCep(@Valid @RequestBody RequestDto request) {
