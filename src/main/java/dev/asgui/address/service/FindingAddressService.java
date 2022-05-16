@@ -6,7 +6,7 @@ public interface FindingAddressService {
 
     String updateDigitLeftToRight(String cep, int position);
 
-    boolean isNumbering(String cep);
+    boolean isNumeric(String cep);
 
     AddressDto findAddressByCep(String cep);
 }

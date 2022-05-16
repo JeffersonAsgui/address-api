@@ -6,6 +6,7 @@ import dev.asgui.address.exception.DataIntegratyViolationException;
 import dev.asgui.address.mapper.AddressMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class FindingAddressServiceImpl implements FindingAddressService {
 
     private static final Logger logger = LoggerFactory.getLogger(FindingAddressServiceImpl.class);
 
+    @Autowired
     public FindingAddressServiceImpl(ConsultCepClient consultCepClient) {
         this.consultCepClient = consultCepClient;
     }
@@ -29,14 +31,14 @@ public class FindingAddressServiceImpl implements FindingAddressService {
     }
 
     @Override
-    public boolean isNumbering(String cep) {
+    public boolean isNumeric(String cep) {
         logger.info("m=address.findByCep verify isNumbering ");
         return cep.matches("^\\d+$");
     }
 
     @Override
     public AddressDto findAddressByCep(String cep) {
-        if (!isNumbering(cep)) {
+        if (!isNumeric(cep)) {
             logger.error("m=address.findByCep error cep={} ", cep);
             throw new DataIntegratyViolationException("CEP inválido");
         }

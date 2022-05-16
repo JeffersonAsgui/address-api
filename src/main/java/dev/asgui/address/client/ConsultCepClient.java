@@ -1,6 +1,7 @@
 package dev.asgui.address.client;
 
 import dev.asgui.address.dto.ResponseConsultCepDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,11 +19,8 @@ public class ConsultCepClient {
 
     private static final String PATH = "/ws/";
 
-    private final RestTemplate restTemplate;
-
-    public ConsultCepClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    @Autowired
+    private RestTemplate restTemplate;
 
     public ResponseEntity<ResponseConsultCepDto> getAddress(String cep) {
         HttpHeaders headers = new HttpHeaders();

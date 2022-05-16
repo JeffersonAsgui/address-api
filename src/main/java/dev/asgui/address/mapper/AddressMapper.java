@@ -6,11 +6,11 @@ import dev.asgui.address.dto.ResponseConsultCepDto;
 public class AddressMapper {
 
     public static AddressDto toDto(ResponseConsultCepDto consultCepDto) {
-        var address = new AddressDto();
-        address.setCidade(consultCepDto.getLocalidade());
-        address.setBairro(consultCepDto.getBairro());
-        address.setEstado(consultCepDto.getUf());
-        address.setRua(consultCepDto.getLogradouro());
-        return address;
+        return AddressDto.builder()
+                .Cidade(consultCepDto.getLocalidade())
+                .Bairro(consultCepDto.getBairro())
+                .Estado(consultCepDto.getUf())
+                .Rua(consultCepDto.getLogradouro())
+                .build();
     }
 }
